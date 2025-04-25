@@ -4,25 +4,20 @@ pipeline {
     stages {
         stage('Clone Repo') {
             steps {
-                dir('react-project') {
-                    git branch: 'master', url: 'https://github.com/pavansai2205/reactjs-project.git'
-                }
+                // Clone directly to the workspace root
+                git branch: 'master', url: 'https://github.com/pavansai2205/reactjs-project.git'
             }
         }
 
         stage('Build Images') {
             steps {
-                dir('react-project') {
-                    sh 'docker-compose build'
-                }
+                sh 'docker-compose build'
             }
         }
 
         stage('Run Containers') {
             steps {
-                dir('react-project') {
-                    sh 'docker-compose up -d'
-                }
+                sh 'docker-compose up -d'
             }
         }
 
@@ -31,6 +26,5 @@ pipeline {
                 sh 'docker ps'
             }
         }
-
     }
 }
