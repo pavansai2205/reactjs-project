@@ -62,6 +62,7 @@ pipeline {
             }
         }
         }
+        }
 
         stage('Start Containers') {
             steps {
