@@ -74,13 +74,15 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     sh '''
-                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                        docker tag reactjs-project_frontend $IMAGE_NAME
-                        docker push $IMAGE_NAME
+                        echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+                        docker tag portfolio_docker-frontend $DOCKER_USER/portfolio_docker-frontend:latest
+                        docker push $DOCKER_USER/portfolio_docker-frontend:latest
+                        docker logout
                     '''
                 }
             }
         }
+
     }
 
     post {
