@@ -5,7 +5,7 @@ pipeline {
         stage('Clone Repo') {
             steps {
                 dir('react-project') {
-                    git branch: 'master', url: 'https://github.com/pavansai2205/react-project.git'
+                    git branch: 'master', url: 'https://github.com/pavansai2205/reactjs-project.git'
                 }
             }
         }
