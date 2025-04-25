@@ -24,6 +24,7 @@ pipeline {
         stage('Test Containers') {
             steps {
                 sh 'docker ps'
+                sh 'docker-compose logs frontend'
             }
         }
     }
