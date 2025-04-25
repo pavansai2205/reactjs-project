@@ -39,11 +39,6 @@ pipeline {
         IMAGE_NAME = 'pavansai2205/portfolio_docker-frontend:latest'
     }
 
-    triggers {
-        // Automatically trigger the pipeline on GitHub push events
-        githubPush()
-    }
-
     stages {
         stage('Clone Repo') {
             steps {
@@ -51,7 +46,7 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build Docker Images') {
             steps {
                 sh 'docker-compose build'
             }
@@ -72,23 +67,26 @@ pipeline {
 
         stage('Push to Docker Hub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-credentials',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
                     sh '''
-                        echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-                        docker tag portfolio_docker-frontend $DOCKER_USER/portfolio_docker-frontend:latest
-                        docker push $DOCKER_USER/portfolio_docker-frontend:latest
+                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                        docker tag portfolio_docker-frontend:latest $IMAGE_NAME
+                        docker push $IMAGE_NAME
                         docker logout
                     '''
                 }
             }
         }
-
     }
 
     post {
         always {
-            echo 'Cleaning up...'
-            sh 'docker logout'
+            echo 'Cleaning up containers...'
+            sh 'docker-compose down || true'
         }
     }
 }
