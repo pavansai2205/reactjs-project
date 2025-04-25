@@ -36,7 +36,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'pavansai2205/reactjs-project:latest'
+        IMAGE_NAME = 'pavansai2205/portfolio_docker-frontend:latest'
     }
 
     triggers {
