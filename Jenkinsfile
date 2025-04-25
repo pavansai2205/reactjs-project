@@ -72,12 +72,15 @@ pipeline {
                     usernameVariable: 'DOCKER_USER',
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
-                    sh '''
-                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                        docker tag portfolio_docker-frontend:latest $IMAGE_NAME
-                        docker push $IMAGE_NAME
-                        docker logout
-                    '''
+                    script {
+                        def imageName = "pavansai2205/reactjs_portfolio:latest" // or use "reactjs_portfolio:${env.BUILD_NUMBER}"
+                        sh """
+                            echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                            docker tag portfolio_docker-frontend:latest ${imageName}
+                            docker push ${imageName}
+                            docker logout
+                        """
+                    }
                 }
             }
         }
