@@ -20,7 +20,7 @@ function Navbar() {
         <div className="menu-line menu-line-2"></div>
         <div className="menu-line menu-line-3"></div>
       </div>
-      <h1>Ram studio</h1>
+      <h1>ram studio</h1>
       <ul>
         {NavbarItems.map((item, index) => {
           return (
