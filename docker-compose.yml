@@ -3,8 +3,6 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
-    
-    # image: pavansai2205/portfolio_docker-frontend:latest
 
     ports:
       - "3000:3000"
